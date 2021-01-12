@@ -1,6 +1,6 @@
 # narayana-problem project
 
-Projeto que evidencia o problema de devolução de conexões com o banco de dados ao POOL.
+Projeto que evidencia o problema de devolução de conexões com o banco de dados ao POOL quando usamos JDBC.
 
 ## Executando a aplicação
 
