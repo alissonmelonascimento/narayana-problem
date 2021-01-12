@@ -29,8 +29,9 @@ public class UserRepositoryImpl implements UserRepository {
 		
 		PreparedStatement stm = null;
 		ResultSet rs = null;
+		Connection conn = null;
         try{
-        	Connection conn = datasource.getConnection();
+        	conn = datasource.getConnection();
             stm = conn.prepareStatement(sql);
             rs = stm.executeQuery();
             while(rs.next()) {
@@ -45,13 +46,17 @@ public class UserRepositoryImpl implements UserRepository {
             e.printStackTrace();
         }finally{
             try {
-            	if(stm != null){
+            	if(rs != null && !rs.isClosed()) {
+            		rs.close();
+            	}            	
+            	
+            	if(stm != null && !stm.isClosed()){
             		stm.close();
             	}
             	
-            	if(rs != null) {
-            		rs.close();
-            	}
+            	if(conn != null && !conn.isClosed()){
+            		conn.close();
+            	}            	
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
