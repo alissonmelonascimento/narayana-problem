@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  postgres_narayana:
+    container_name: postgres_narayana
+    image: postgres:12.2
+    environment:
+      POSTGRES_USER: teste
+      POSTGRES_PASSWORD: teste
+    ports:
+      - "5432:5432"
