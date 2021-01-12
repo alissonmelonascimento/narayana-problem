@@ -1,50 +1,30 @@
 # narayana-problem project
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+Projeto que evidencia o problema de devolução de conexões com o banco de dados ao POOL.
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
-
-## Running the application in dev mode
+## Executando a aplicação
 
 You can run your application in dev mode that enables live coding using:
+```shell script
+docker-compose up
+```
+
 ```shell script
 ./mvnw compile quarkus:dev
 ```
 
-## Packaging and running the application
+## Testando a aplicação
 
-The application can be packaged using:
-```shell script
-./mvnw package
-```
-It produces the `narayana-problem-1.0.0-SNAPSHOT-runner.jar` file in the `/target` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/lib` directory.
+Faça 20 chamadas a URL: http://localhost:8080/users. 
 
-If you want to build an _über-jar_, execute the following command:
-```shell script
-./mvnw package -Dquarkus.package.type=uber-jar
-```
+Na 21 chamada, a aplicação dá erro e para e exibe o seguinte erro no LOG
 
-The application is now runnable using `java -jar target/narayana-problem-1.0.0-SNAPSHOT-runner.jar`.
+**java.sql.SQLException: Sorry, acquisition timeout!**
 
-## Creating a native executable
+## Análise do problema
 
-You can create a native executable using: 
-```shell script
-./mvnw package -Pnative
-```
+Isso ocorre, pois todos os métodos envolvidos não possuem a anotação @Transactional().
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using: 
-```shell script
-./mvnw package -Pnative -Dquarkus.native.container-build=true
-```
+Dessa forma, o gerenciador assume como padrão a anotação @Transactional(value = Transactional.TxType.SUPPORTS)
 
-You can then execute your native executable with: `./target/narayana-problem-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.html.
-
-# RESTEasy JAX-RS
-
-<p>A Hello World RESTEasy resource</p>
-
-Guide: https://quarkus.io/guides/rest-json
+Se adicionar a anotação @Transactional(), funciona.
