@@ -15,7 +15,7 @@ docker-compose up
 
 ## Testando a aplicação
 
-Faça 20 chamadas a URL: http://localhost:8080/users. Obs: Pool de conexões padrão criado quarkus com 20 conexões. Se quiser alterar, defina a propriedade quarkus.datasource.jdbc.max-size
+Faça 20 chamadas a URL: http://localhost:8080/users. Obs: Pool de conexões padrão criado pelo quarkus com 20 conexões. Se quiser alterar, defina a propriedade **quarkus.datasource.jdbc.max-size**
 
 Na 21 chamada, a aplicação dá erro e para e exibe o seguinte erro no LOG
 
