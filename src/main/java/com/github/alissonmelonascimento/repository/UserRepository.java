@@ -11,6 +11,6 @@ public interface UserRepository {
 	 * 
 	 * @return
 	 */
-	List<User> getUsers();
+	List<User> findAll();
 
 }

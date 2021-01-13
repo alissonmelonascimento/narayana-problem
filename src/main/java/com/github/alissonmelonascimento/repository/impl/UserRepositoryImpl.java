@@ -10,11 +10,14 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.eclipse.microprofile.opentracing.Traced;
+
 import com.github.alissonmelonascimento.model.User;
 import com.github.alissonmelonascimento.repository.UserRepository;
 
 import io.agroal.api.AgroalDataSource;
 
+@Traced
 @ApplicationScoped
 public class UserRepositoryImpl implements UserRepository {
 	
@@ -22,7 +25,7 @@ public class UserRepositoryImpl implements UserRepository {
 	AgroalDataSource datasource;	
 
 	@Override
-	public List<User> getUsers() {
+	public List<User> findAll() {
 		
 		String sql = " select * from public.usuario order by nome ";
 		List<User> users = new ArrayList<>();
@@ -36,6 +39,7 @@ public class UserRepositoryImpl implements UserRepository {
             rs = stm.executeQuery();
             while(rs.next()) {
             	User user = new User();
+            	user.setId(rs.getInt("id"));
             	user.setAnoNascimento(rs.getInt("ano"));
             	user.setNome(rs.getString("nome"));
             	user.setSobreNome(rs.getString("sobrenome"));
