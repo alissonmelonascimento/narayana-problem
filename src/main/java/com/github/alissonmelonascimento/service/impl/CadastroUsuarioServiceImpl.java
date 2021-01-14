@@ -50,4 +50,9 @@ public class CadastroUsuarioServiceImpl implements CadastroUsuarioService {
 
 	}
 
+	@Override
+	public List<UserRole> getAllCadastrados() {
+		return userRoleRepository.getAllCadastrados();
+	}
+
 }

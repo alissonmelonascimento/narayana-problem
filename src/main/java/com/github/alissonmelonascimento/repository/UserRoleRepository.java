@@ -9,5 +9,6 @@ public interface UserRoleRepository {
 	void deleteAll();
 	void insert(UserRole userRole);
 	List<UserRole> findByUsuario(Integer userId);
+	List<UserRole> getAllCadastrados();
 
 }
